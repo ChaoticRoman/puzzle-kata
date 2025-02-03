@@ -6,17 +6,26 @@ def puzzle_solver(pieces, width, height):
                 return convert_to_solution(placed)
         placed, remaining = attempts.pop()
         attempts.extend(find_all_possible_next_steps(placed, remaining, width, height))
+        print(len(attempts))
 
 
 def find_all_possible_next_steps(placed, remaining, width, height):
     print(convert_to_solution(placed))
+    # Handle first top left piece
     if not placed:
         i, top_left = [(i, piece) for (i, piece) in enumerate(remaining)
                        if piece[0][0] is None and piece[0][1] is None and piece[1][0] is None][0]
         placed = [[top_left], ]
-        return [(placed, [remaining[:i] + remaining[i:]])]
-    if len(placed) == 1 and len(placed) < width:
-        pass
+        return [(placed, remaining[:i] + remaining[i:])]
+    last_placed_row = len(placed) - 1
+    last_placed_column = len(placed[-1]) - 1
+    # Handle middle of first row
+    if last_placed_row == 0 and last_placed_column < width - 1:
+        candidates = [(i, piece) for (i, piece) in enumerate(remaining)
+                      if piece[0][0] is None and piece[0][1] is None
+                      and piece[1][0] == placed[0][last_placed_column][1][1] and piece[1][0] is not None]
+        return [([placed[0] + [c]], [remaining[:i] + remaining[i:]]) for (i, c) in candidates]
+
     return []
 
 
