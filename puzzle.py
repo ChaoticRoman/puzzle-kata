@@ -22,8 +22,11 @@ def find_all_possible_next_steps(placed, remaining, width, height):
             return (piece[0][0], piece[0][1], piece[1][0]) == (None, None, None)
         piece_left = placed[-1][last_placed_column]
         # First row
-        if len(placed) == 1 and len(placed[0]) < width:
-            return (piece[0][0], piece[0][1], piece[1][0]) == (None, None, piece_left[1][1])
+        if len(placed) == 1 and len(placed[0]) < width - 1:
+            return (piece[0][0], piece[0][1], piece[1][0]) == (None, None, piece_left[1][1]) and piece[1][0] is not None and piece[1][1] is not None
+        # Top right
+        if len(placed) == 1 and len(placed[0]) == width - 1:
+            return (piece[0][0], piece[0][1], piece[1][1]) == (None, None, None)
         # First column
         if len(placed[-1]) == width:
             piece_up = placed[-1][0]
