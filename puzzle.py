@@ -43,7 +43,7 @@ def find_all_possible_next_steps(placed, remaining, width, height):
 
 def convert_to_solution(placed):
     #print(placed)
-    return [[i for (first_row, second_row, i) in row] for row in placed]
+    return [tuple(i for (first_row, second_row, i) in row) for row in placed]
 
 
 puzzle = [
